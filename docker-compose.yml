@@ -1,0 +1,19 @@
+---
+version: '4.2'
+
+services:
+  blog-system_database:
+    image: postgres:latest
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: blog_system
+      POSTGRES_PASSWORD: blogsystempostgres123
+      POSTGRES_DB: blog_system
+    volumes:
+      - pgdata:/data/postgres
+
+volumes:
+  pgdata:
+    driver: local
+...
