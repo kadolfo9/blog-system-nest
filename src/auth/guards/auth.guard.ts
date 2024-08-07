@@ -1,5 +1,5 @@
-import { extractTokenFromHeader } from '@/core/helpers';
-import { IS_PUBLIC_KEY } from '@/domain/decorators/public.decorator';
+import { extractTokenFromHeader } from '@/global/helpers';
+import { IS_PUBLIC_KEY } from '@/auth/decorators/public.decorator';
 import {
   CanActivate,
   ExecutionContext,

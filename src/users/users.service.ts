@@ -1,7 +1,7 @@
 import { Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
-import { User } from '../../domain/models/users.model';
-import { UserSignupDto } from '../../domain/dto/users/user-signup.dto';
+import { User } from './models/users.model';
+import { UserSignupDto } from './dto/user-signup.dto';
 
 @Injectable()
 export class UsersService {

@@ -6,15 +6,15 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { User } from '@/domain/models/users.model';
-import { UsersService } from '@/services/users/users.service';
-import { AuthRequestDto } from '@/domain/dto/auth/auth-request.dto';
+import { User } from '@/users/models/users.model';
+import { UsersService } from '@/users/users.service';
+import { AuthRequestDto } from '@/auth/dto/auth-request.dto';
 import {
   compareHash,
   extractTokenFromHeader,
   generateHash,
-} from '@/core/helpers';
-import { UserSignupDto } from '@/domain/dto/users/user-signup.dto';
+} from '@/global/helpers';
+import { UserSignupDto } from '@/users/dto/user-signup.dto';
 
 export interface TokenResponse {
   token: string;

@@ -1,6 +1,5 @@
-import { Roles } from '@/domain/enums/roles';
-import { User } from '@/domain/models/users.model';
-import { PostsService } from '@/services/posts/posts.service';
+import { User } from '@/users/models/users.model';
+import { PostsService } from '@/posts/posts.service';
 import {
   BadRequestException,
   CanActivate,
@@ -38,8 +37,8 @@ export class PostManagementGuard implements CanActivate {
     }
 
     if (
-      post.userId !== user?.id ||
-      (post.userId !== user?.id && user?.access !== Roles.ADMIN)
+      post.userId !== user?.id /*||
+      (post.userId !== user?.id && user?.role !== UsersRoles.ADMIN)*/
     ) {
       throw new ForbiddenException('User is not the owner of the post.');
     }

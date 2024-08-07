@@ -1,5 +1,5 @@
-import { CreatePostDto } from '@/domain/dto/posts/create-post.dto';
-import { Post } from '@/domain/models/posts.model';
+import { CreatePostDto } from '@/posts/dto/create-post.dto';
+import { Post } from '@/posts/models/posts.model';
 import {
   HttpException,
   HttpStatus,
@@ -11,9 +11,9 @@ import {
   Scope,
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
-import { AuthService } from '../auth/auth.service';
+import { AuthService } from '@/auth/auth.service';
 import { REQUEST } from '@nestjs/core';
-import { EditPostDto } from '@/domain/dto/posts/edit-post.dto';
+import { EditPostDto } from '@/posts/dto/edit-post.dto';
 
 @Injectable({ scope: Scope.REQUEST })
 export class PostsService {

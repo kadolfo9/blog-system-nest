@@ -1,28 +1,28 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { PostsController } from './posts.controller';
-import { PostsService } from '../services/posts/posts.service';
-import { Post } from '@/domain/models/posts.model';
-import { AuthService } from '@/services/auth/auth.service';
+import { PostsService } from './posts.service';
+import { Post } from './models/posts.model';
+import { AuthService } from '@/auth/auth.service';
 import { SequelizeModule } from '@nestjs/sequelize';
-import { UsersModule } from '@/modules/users.module';
+import { UsersModule } from '@/users/users.module';
 
 describe('PostsController', () => {
   let controller: PostsController;
   let service: PostsService;
 
   beforeEach(async () => {
-    // const module: TestingModule = await Test.createTestingModule({
-    //   controllers: [PostsController],
-    //   providers: [PostsService, AuthService],
-    //   imports: [UsersModule, SequelizeModule.forFeature([Post])],
-    //   exports: [PostsService, SequelizeModule],
-    // }).compile();
+    const module: TestingModule = await Test.createTestingModule({
+      controllers: [PostsController],
+      providers: [PostsService, AuthService],
+      imports: [UsersModule, SequelizeModule.forFeature([Post])],
+      exports: [PostsService, SequelizeModule],
+    }).compile();
 
-    // controller = module.get<PostsController>(PostsController);
-    // service = module.get<PostsService>(PostsService);
+    controller = module.get<PostsController>(PostsController);
+    service = module.get<PostsService>(PostsService);
 
-    controller = new PostsController();
-    service = new PostsService();
+    //controller = new PostsController();
+    //service = new PostsService();
   });
 
   it('should be defined', () => {

@@ -1,5 +1,5 @@
 import { Column, Default, IsEmail, Model, Table } from 'sequelize-typescript';
-import { Roles } from '../enums/roles';
+import { UsersRoles } from '@/users/enums/users.roles';
 
 @Table({
   timestamps: true,
@@ -15,7 +15,7 @@ export class User extends Model {
   @Column
   password: string;
 
+  @Default(UsersRoles.REGISTERED)
   @Column
-  @Default(Roles.REGISTERED)
-  access: Roles;
+  role: UsersRoles;
 }

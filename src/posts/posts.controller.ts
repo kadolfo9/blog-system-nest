@@ -1,7 +1,7 @@
-import { CreatePostDto } from '@/domain/dto/posts/create-post.dto';
-import { PostsService } from '@/services/posts/posts.service';
-import { Post as PostModel } from '@/domain/models/posts.model';
-import { UsersService } from '@/services/users/users.service';
+import { CreatePostDto } from '@/posts/dto/create-post.dto';
+import { PostsService } from '@/posts/posts.service';
+import { Post as PostModel } from '@/posts/models/posts.model';
+import { UsersService } from '@/users/users.service';
 import {
   Body,
   Controller,
@@ -14,9 +14,11 @@ import {
   Put,
   UseGuards,
 } from '@nestjs/common';
-import { EditPostDto } from '@/domain/dto/posts/edit-post.dto';
-import { PostManagementGuard } from '@/middleware/posts/post-manage.guard';
-import { Public } from '@/domain/decorators/public.decorator';
+import { EditPostDto } from '@/posts/dto/edit-post.dto';
+import { PostManagementGuard } from '@/posts/guards/post-manage.guard';
+import { Public } from '@/auth/decorators/public.decorator';
+import { AuthorizedUser } from '@/users/decorators/authorized-user.decorator';
+import { UsersRoles } from '@/users/enums/users.roles';
 
 @Controller('posts')
 export class PostsController {
@@ -35,6 +37,7 @@ export class PostsController {
   }
 
   @Put('/edit/:postId')
+  @AuthorizedUser(UsersRoles.ADMIN)
   @UseGuards(PostManagementGuard)
   @HttpCode(200)
   public async edit(
@@ -45,6 +48,7 @@ export class PostsController {
   }
 
   @Delete('/delete/:postId')
+  @AuthorizedUser(UsersRoles.ADMIN)
   @UseGuards(PostManagementGuard)
   @HttpCode(200)
   public async deletePost(@Param('postId') postId: string): Promise<void> {
