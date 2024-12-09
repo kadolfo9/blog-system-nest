@@ -1,5 +1,5 @@
-import { CreatePostDto } from '@/posts/dto/create-post.dto';
-import { Post } from '@/posts/models/posts.model';
+import { CreatePostDto } from "@/posts/dto/create-post.dto";
+import { Post } from "@/posts/models/posts.model";
 import {
   HttpException,
   HttpStatus,
@@ -9,11 +9,11 @@ import {
   NotFoundException,
   Request,
   Scope,
-} from '@nestjs/common';
-import { InjectModel } from '@nestjs/sequelize';
-import { AuthService } from '@/auth/auth.service';
-import { REQUEST } from '@nestjs/core';
-import { EditPostDto } from '@/posts/dto/edit-post.dto';
+} from "@nestjs/common";
+import { InjectModel } from "@nestjs/sequelize";
+import { AuthService } from "@/auth/auth.service";
+import { REQUEST } from "@nestjs/core";
+import { EditPostDto } from "@/posts/dto/edit-post.dto";
 
 @Injectable({ scope: Scope.REQUEST })
 export class PostsService {
@@ -60,7 +60,7 @@ export class PostsService {
   public async get(postId: string): Promise<Post> {
     const post = await this.postModel.findOne({ where: { id: postId } });
 
-    if (!post) throw new NotFoundException('Post not found.');
+    if (!post) throw new NotFoundException("Post not found.");
 
     return post.toJSON();
   }

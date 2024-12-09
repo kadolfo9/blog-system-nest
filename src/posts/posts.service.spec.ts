@@ -1,19 +1,19 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { PostsService } from '@/posts/posts.service';
-import { getModelToken, SequelizeModule } from '@nestjs/sequelize';
-import { UsersModule } from '@/users/users.module';
-import { AuthService } from '@/auth/auth.service';
-import { PostsController } from '@/posts/posts.controller';
-import { Post } from '@/posts/models/posts.model';
+import { Test, TestingModule } from "@nestjs/testing";
+import { PostsService } from "@/posts/posts.service";
+import { getModelToken, SequelizeModule } from "@nestjs/sequelize";
+import { UsersModule } from "@/users/users.module";
+import { AuthService } from "@/auth/auth.service";
+import { PostsController } from "@/posts/posts.controller";
+import { Post } from "@/posts/models/posts.model";
 
 const testPost = {
   id: 1,
-  title: 'A test post',
-  content: 'A test post content',
+  title: "A test post",
+  content: "A test post content",
   userId: 1,
 };
 
-describe('PostsService', () => {
+describe("PostsService", () => {
   let service: PostsService;
   let model: typeof Post;
 
@@ -42,7 +42,7 @@ describe('PostsService', () => {
     model = module.get<typeof Post>(getModelToken(Post));
   });
 
-  it('should be defined', () => {
+  it("should be defined", () => {
     expect(service).toBeDefined();
   });
 });

@@ -1,7 +1,7 @@
-import { Injectable, Logger, NotFoundException } from '@nestjs/common';
-import { InjectModel } from '@nestjs/sequelize';
-import { User } from './models/users.model';
-import { UserSignupDto } from './dto/user-signup.dto';
+import { Injectable, Logger } from "@nestjs/common";
+import { InjectModel } from "@nestjs/sequelize";
+import { User } from "./models/users.model";
+import { UserSignupDto } from "./dto/user-signup.dto";
 
 @Injectable()
 export class UsersService {
@@ -25,29 +25,19 @@ export class UsersService {
   }
 
   public async findByEmail(email: string): Promise<User> {
-    const user = await this.userModel.findOne({
+    return await this.userModel.findOne({
       where: {
         email,
       },
     });
-
-    if (!user) throw new NotFoundException();
-
-    console.log(user);
-
-    return user;
   }
 
   public async findById(id: string): Promise<User> {
-    const user = await this.userModel.findOne({
+    return await this.userModel.findOne({
       where: {
         id,
       },
     });
-
-    if (!user) throw new NotFoundException();
-
-    return user;
   }
 
   public async delete(id: number): Promise<void> {

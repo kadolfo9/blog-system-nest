@@ -1,13 +1,13 @@
-import { extractTokenFromHeader } from '@/global/helpers';
-import { IS_PUBLIC_KEY } from '@/auth/decorators/public.decorator';
+import { extractTokenFromHeader } from "@/global/helpers";
+import { IS_PUBLIC_KEY } from "@/auth/decorators/public.decorator";
 import {
   CanActivate,
   ExecutionContext,
   Injectable,
   UnauthorizedException,
-} from '@nestjs/common';
-import { Reflector } from '@nestjs/core';
-import { JwtService } from '@nestjs/jwt';
+} from "@nestjs/common";
+import { Reflector } from "@nestjs/core";
+import { JwtService } from "@nestjs/jwt";
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -35,9 +35,9 @@ export class AuthGuard implements CanActivate {
         secret: process.env.JWT_SECRET,
       });
 
-      request['user'] = payload;
+      request["user"] = payload;
     } catch {
-      throw new UnauthorizedException('Não autorizado.');
+      throw new UnauthorizedException("Não autorizado.");
     }
     return true;
   }

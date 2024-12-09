@@ -1,5 +1,5 @@
-import { Column, Default, IsEmail, Model, Table } from 'sequelize-typescript';
-import { UsersRoles } from '@/users/enums/users.roles';
+import { Column, Default, IsEmail, Model, Table } from "sequelize-typescript";
+import { UsersRoles } from "@/users/enums/users.roles";
 
 @Table({
   timestamps: true,

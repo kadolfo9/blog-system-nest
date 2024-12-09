@@ -7,13 +7,13 @@ import {
   Inject,
   Post,
   Request,
-} from '@nestjs/common';
-import { AuthService, TokenResponse } from '@/auth/auth.service';
-import { AuthRequestDto } from '@/auth/dto/auth-request.dto';
-import { Public } from './decorators/public.decorator';
-import { UserSignupDto } from '@/users/dto/user-signup.dto';
+} from "@nestjs/common";
+import { AuthService, TokenResponse } from "@/auth/auth.service";
+import { AuthRequestDto } from "@/auth/dto/auth-request.dto";
+import { Public } from "./decorators/public.decorator";
+import { UserSignupDto } from "@/users/dto/user-signup.dto";
 
-@Controller('auth')
+@Controller("auth")
 export class AuthController {
   @Inject(AuthService) private readonly authService: AuthService;
 
@@ -27,12 +27,12 @@ export class AuthController {
   }
 
   @Public()
-  @Post('signup')
+  @Post("signup")
   public async signUp(@Body() userSignUpDto: UserSignupDto): Promise<void> {
     return this.authService.signUp(userSignUpDto);
   }
 
-  @Get('profile')
+  @Get("profile")
   public async getUser(@Request() request) {
     return this.authService.getUser(request);
   }

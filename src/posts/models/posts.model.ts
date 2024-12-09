@@ -5,8 +5,8 @@ import {
   ForeignKey,
   Model,
   Table,
-} from 'sequelize-typescript';
-import { User } from '@/users/models/users.model';
+} from "sequelize-typescript";
+import { User } from "@/users/models/users.model";
 
 @Table({
   timestamps: true,

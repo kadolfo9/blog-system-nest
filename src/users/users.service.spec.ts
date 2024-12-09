@@ -1,16 +1,16 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { UsersService } from './users.service';
-import { getModelToken } from '@nestjs/sequelize';
-import { User } from './models/users.model';
+import { Test, TestingModule } from "@nestjs/testing";
+import { UsersService } from "./users.service";
+import { getModelToken } from "@nestjs/sequelize";
+import { User } from "./models/users.model";
 
 const testUser = {
   id: 1,
-  username: 'user',
-  email: 'user@blogsystem.com',
-  password: '12345678',
+  username: "user",
+  email: "user@blogsystem.com",
+  password: "12345678",
 };
 
-describe('UsersService', () => {
+describe("UsersService", () => {
   let service: UsersService;
   let model: typeof User;
 
@@ -35,16 +35,16 @@ describe('UsersService', () => {
     model = module.get<typeof User>(getModelToken(User));
   });
 
-  it('should be defined', () => {
+  it("should be defined", () => {
     expect(service).toBeDefined();
   });
 
-  it('create a user', () => {
+  it("create a user", () => {
     expect(
       service.create({
-        username: 'user',
-        email: 'user@blogsystem.com',
-        password: '12345678',
+        username: "user",
+        email: "user@blogsystem.com",
+        password: "12345678",
       }),
     ).toHaveBeenCalled();
   });

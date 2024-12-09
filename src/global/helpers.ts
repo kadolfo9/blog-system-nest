@@ -1,6 +1,6 @@
-import { JwtService } from '@nestjs/jwt';
-import * as bcrypt from 'bcrypt';
-import { Request } from 'express';
+import { JwtService } from "@nestjs/jwt";
+import * as bcrypt from "bcrypt";
+import { Request } from "express";
 
 export async function generateHash(
   value: string,
@@ -10,8 +10,8 @@ export async function generateHash(
 }
 
 export function extractTokenFromHeader(request: Request): string | undefined {
-  const [type, token] = request.headers?.authorization?.split(' ') ?? [];
-  return type === 'Bearer' ? token : undefined;
+  const [type, token] = request.headers?.authorization?.split(" ") ?? [];
+  return type === "Bearer" ? token : undefined;
 }
 
 export async function compareHash(

@@ -4,17 +4,17 @@ import {
   Injectable,
   Request,
   UnauthorizedException,
-} from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
-import { User } from '@/users/models/users.model';
-import { UsersService } from '@/users/users.service';
-import { AuthRequestDto } from '@/auth/dto/auth-request.dto';
+} from "@nestjs/common";
+import { JwtService } from "@nestjs/jwt";
+import { User } from "@/users/models/users.model";
+import { UsersService } from "@/users/users.service";
+import { AuthRequestDto } from "@/auth/dto/auth-request.dto";
 import {
   compareHash,
   extractTokenFromHeader,
   generateHash,
-} from '@/global/helpers';
-import { UserSignupDto } from '@/users/dto/user-signup.dto';
+} from "@/global/helpers";
+import { UserSignupDto } from "@/users/dto/user-signup.dto";
 
 export interface TokenResponse {
   token: string;
@@ -47,26 +47,27 @@ export class AuthService {
 
     const user = await this.userService.findByEmail(email);
 
-    if (user == null) {
-      throw new UnauthorizedException('Incorrect Email address or password.');
-    } else {
+    if (user) {
       const compare = await compareHash(password, user?.password);
-      console.log(compare);
 
       if (!compare) {
         throw new UnauthorizedException(
-          'Incorrect Email address or incorrect password.',
+          "Incorrect Email address or incorrect password.",
         );
       }
 
       return this.login(user);
     }
+
+    throw new UnauthorizedException("Incorrect Email address or password.");
   }
 
   async signUp(signUpParams: UserSignupDto): Promise<void> {
-    const user = this.userService.findByEmail(signUpParams.email);
+    const user = await this.userService.findByEmail(signUpParams.email);
 
-    if (user) throw new BadRequestException('User with this e-mail exists.');
+    if (user !== null) {
+      throw new BadRequestException("User with this e-mail exists.");
+    }
 
     signUpParams.password = await generateHash(signUpParams.password, 10);
 

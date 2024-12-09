@@ -1,13 +1,13 @@
-import { extractTokenFromHeader } from '@/global/helpers';
-import { UsersRoles } from '@/users/enums/users.roles';
-import { User } from '@/users/models/users.model';
+import { extractTokenFromHeader } from "@/global/helpers";
+import { UsersRoles } from "@/users/enums/users.roles";
+import { User } from "@/users/models/users.model";
 import {
   CanActivate,
   ExecutionContext,
   Injectable,
   UnauthorizedException,
-} from '@nestjs/common';
-import { Reflector } from '@nestjs/core';
+} from "@nestjs/common";
+import { Reflector } from "@nestjs/core";
 
 @Injectable()
 export class AuthorizedUserGuard implements CanActivate {
@@ -15,7 +15,7 @@ export class AuthorizedUserGuard implements CanActivate {
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const requiredRoles = this.reflector.get<UsersRoles[]>(
-      'roles',
+      "roles",
       context.getHandler(),
     );
 
