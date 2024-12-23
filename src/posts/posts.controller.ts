@@ -30,8 +30,9 @@ export class PostsController {
 
   @Post("/create")
   @HttpCode(200)
-  public async create(@Body() createPostDto: CreatePostDto): Promise<PostModel> {
-    // TODO: dont return void.. returns post.
+  public async create(
+    @Body() createPostDto: CreatePostDto,
+  ): Promise<PostModel> {
     return this.postsService.create(createPostDto);
   }
 
