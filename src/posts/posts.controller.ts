@@ -22,18 +22,27 @@ import { UsersRoles } from "@/users/enums/users.roles";
 
 @Controller("posts")
 export class PostsController {
-  @Inject(PostsService) private readonly postsService: PostsService;
-  @Inject(UsersService) private readonly usersService: UsersService;
+  @Inject(PostsService)
+  private readonly postsService: PostsService;
+
+  @Inject(UsersService)
+  private readonly usersService: UsersService;
 
   @Post("/create")
   @HttpCode(200)
-  public async create(@Body() createPostDto: CreatePostDto): Promise<void> {
+  public async create(@Body() createPostDto: CreatePostDto): Promise<PostModel> {
+    // TODO: dont return void.. returns post.
     return this.postsService.create(createPostDto);
   }
 
   @Get()
   public async getAll(): Promise<PostModel[]> {
     return this.postsService.getAll();
+  }
+
+  @Get("/:postId")
+  public async get(@Param("postId") postId: string): Promise<PostModel> {
+    return this.postsService.get(postId);
   }
 
   @Put("/edit/:postId")

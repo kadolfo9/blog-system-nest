@@ -24,7 +24,7 @@ import { PostsModule } from "@/posts/posts.module";
       password: process.env.DATABASE_PASSWORD,
       database: process.env.DATABASE_NAME,
       autoLoadModels: true,
-      synchronize: true,
+      synchronize: false,
       logging: false,
       timezone: "-03:00",
     }),

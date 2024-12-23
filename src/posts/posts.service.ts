@@ -14,6 +14,7 @@ import { InjectModel } from "@nestjs/sequelize";
 import { AuthService } from "@/auth/auth.service";
 import { REQUEST } from "@nestjs/core";
 import { EditPostDto } from "@/posts/dto/edit-post.dto";
+import { CommentsService } from "./comments/comments.service";
 
 @Injectable({ scope: Scope.REQUEST })
 export class PostsService {
@@ -21,16 +22,20 @@ export class PostsService {
 
   @Inject(AuthService)
   private readonly authService: AuthService;
+
+  @Inject(CommentsService)
+  private readonly commentsService: CommentsService;
+
   @InjectModel(Post)
   private readonly postModel: typeof Post;
 
   @Inject(REQUEST)
   private readonly request: Request;
 
-  public async create(createPostDto: CreatePostDto): Promise<void> {
+  public async create(createPostDto: CreatePostDto): Promise<Post> {
     const currentUser = await this.authService.getUser(this.request);
 
-    this.postModel
+    const post = await this.postModel
       .create({
         ...createPostDto,
         userId: currentUser?.id,
@@ -38,6 +43,8 @@ export class PostsService {
       .catch((error) => {
         throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR);
       });
+
+    return post;
   }
 
   public async edit(
@@ -58,9 +65,15 @@ export class PostsService {
   }
 
   public async get(postId: string): Promise<Post> {
-    const post = await this.postModel.findOne({ where: { id: postId } });
+    const post = await this.postModel.findOne({
+      where: { id: postId },
+      include: ["comments"],
+    });
 
     if (!post) throw new NotFoundException("Post not found.");
+
+    const comments = await this.commentsService.getByPostId(postId);
+    post.comments = comments;
 
     return post.toJSON();
   }
@@ -68,10 +81,17 @@ export class PostsService {
   public async getAllByUserId(userId: number): Promise<Post[]> {
     return this.postModel.findAll({
       where: { userId },
+      attributes: {
+        exclude: ["comments"],
+      },
     });
   }
 
   public async getAll(): Promise<Post[]> {
-    return this.postModel.findAll();
+    return await this.postModel.findAll({
+      attributes: {
+        exclude: ["comments"],
+      },
+    });
   }
 }
