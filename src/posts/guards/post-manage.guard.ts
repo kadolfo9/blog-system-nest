@@ -10,6 +10,7 @@ import {
   NotFoundException,
   UnauthorizedException,
 } from "@nestjs/common";
+import { UsersRoles } from "@/users/enums/users.roles";
 
 @Injectable()
 export class PostManagementGuard implements CanActivate {
@@ -20,7 +21,7 @@ export class PostManagementGuard implements CanActivate {
     const user = request?.user as User;
 
     if (!user) {
-      throw new UnauthorizedException("Request unauthorized.");
+      throw new UnauthorizedException();
     }
 
     const postId = request?.params?.postId;
@@ -30,15 +31,14 @@ export class PostManagementGuard implements CanActivate {
     }
 
     const post = await this.postsService.get(postId);
-    console.log("post data:", post);
 
     if (!post) {
       throw new NotFoundException("Post not found.");
     }
 
     if (
-      post.userId !== user?.id /*||
-      (post.userId !== user?.id && user?.role !== UsersRoles.ADMIN)*/
+      post.user?.id !== user?.id ||
+      (post.user?.id !== user?.id && user?.role !== UsersRoles.ADMIN)
     ) {
       throw new ForbiddenException("User is not the owner of the post.");
     }

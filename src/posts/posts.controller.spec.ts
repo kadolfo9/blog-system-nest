@@ -20,9 +20,6 @@ describe("PostsController", () => {
 
     controller = module.get<PostsController>(PostsController);
     service = module.get<PostsService>(PostsService);
-
-    //controller = new PostsController();
-    //service = new PostsService();
   });
 
   it("should be defined", () => {

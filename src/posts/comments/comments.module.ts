@@ -8,8 +8,8 @@ import { UsersService } from "@/users/users.service";
 import { CommentsController } from "./comments.controller";
 
 @Module({
-  imports: [UsersModule, SequelizeModule.forFeature([Comment])],
-  exports: [CommentsService, SequelizeModule],
+  imports: [SequelizeModule.forFeature([Comment]), UsersModule],
+  exports: [CommentsService],
   providers: [UsersService, AuthService, CommentsService],
   controllers: [CommentsController],
 })

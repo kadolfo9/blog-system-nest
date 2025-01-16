@@ -1,4 +1,4 @@
-import { CreatePostDto } from "@/posts/dto/create-post.dto";
+import { CreatePostDto } from "@/posts/models/dto/create-post.dto";
 import { PostsService } from "@/posts/posts.service";
 import { Post as PostModel } from "@/posts/models/posts.model";
 import { UsersService } from "@/users/users.service";
@@ -14,7 +14,7 @@ import {
   Put,
   UseGuards,
 } from "@nestjs/common";
-import { EditPostDto } from "@/posts/dto/edit-post.dto";
+import { EditPostDto } from "@/posts/models/dto/edit-post.dto";
 import { PostManagementGuard } from "@/posts/guards/post-manage.guard";
 import { Public } from "@/auth/decorators/public.decorator";
 import { AuthorizedUser } from "@/users/decorators/authorized-user.decorator";

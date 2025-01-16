@@ -6,11 +6,11 @@ import {
   Scope,
 } from "@nestjs/common";
 import { REQUEST } from "@nestjs/core";
-import { CreateCommentDto } from "./dto/create-comment.dto";
+import { CreateCommentDto } from "./models/dto/create-comment.dto";
 import { AuthService } from "@/auth/auth.service";
 import { InjectModel } from "@nestjs/sequelize";
 import { Comment } from "./models/comments.model";
-import { EditCommentDto } from "./dto/edit-comment.dto";
+import { EditCommentDto } from "./models/dto/edit-comment.dto";
 
 @Injectable({ scope: Scope.REQUEST })
 export class CommentsService {

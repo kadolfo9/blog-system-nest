@@ -7,7 +7,7 @@ import {
   Param,
   Post,
 } from "@nestjs/common";
-import { CreateCommentDto } from "./dto/create-comment.dto";
+import { CreateCommentDto } from "./models/dto/create-comment.dto";
 import { CommentsService } from "./comments.service";
 import { Comment } from "./models/comments.model";
 

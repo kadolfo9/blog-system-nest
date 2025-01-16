@@ -11,7 +11,7 @@ import {
 import { AuthService, TokenResponse } from "@/auth/auth.service";
 import { AuthRequestDto } from "@/auth/dto/auth-request.dto";
 import { Public } from "./decorators/public.decorator";
-import { UserSignupDto } from "@/users/dto/user-signup.dto";
+import { UserSignupDto } from "@/users/models/dto/user-signup.dto";
 
 @Controller("auth")
 export class AuthController {

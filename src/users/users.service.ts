@@ -1,7 +1,7 @@
 import { Injectable, Logger } from "@nestjs/common";
 import { InjectModel } from "@nestjs/sequelize";
 import { User } from "./models/users.model";
-import { UserSignupDto } from "./dto/user-signup.dto";
+import { UserSignupDto } from "./models/dto/user-signup.dto";
 
 @Injectable()
 export class UsersService {
@@ -36,6 +36,9 @@ export class UsersService {
     return await this.userModel.findOne({
       where: {
         id,
+      },
+      attributes: {
+        exclude: ["password"],
       },
     });
   }

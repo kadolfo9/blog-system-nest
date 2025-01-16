@@ -14,7 +14,7 @@ import {
   extractTokenFromHeader,
   generateHash,
 } from "@/global/helpers";
-import { UserSignupDto } from "@/users/dto/user-signup.dto";
+import { UserSignupDto } from "@/users/models/dto/user-signup.dto";
 
 export interface TokenResponse {
   token: string;
@@ -80,8 +80,6 @@ export class AuthService {
     if (authToken === undefined) {
       throw new UnauthorizedException();
     }
-
-    console.log(request.user);
 
     const currentUser = request?.user;
 

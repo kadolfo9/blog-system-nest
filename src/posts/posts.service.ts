@@ -1,4 +1,4 @@
-import { CreatePostDto } from "@/posts/dto/create-post.dto";
+import { CreatePostDto } from "@/posts/models/dto/create-post.dto";
 import { Post } from "@/posts/models/posts.model";
 import {
   HttpException,
@@ -13,8 +13,9 @@ import {
 import { InjectModel } from "@nestjs/sequelize";
 import { AuthService } from "@/auth/auth.service";
 import { REQUEST } from "@nestjs/core";
-import { EditPostDto } from "@/posts/dto/edit-post.dto";
+import { EditPostDto } from "@/posts/models/dto/edit-post.dto";
 import { CommentsService } from "./comments/comments.service";
+import { User } from "@/users/models/users.model";
 
 @Injectable({ scope: Scope.REQUEST })
 export class PostsService {
@@ -60,14 +61,25 @@ export class PostsService {
 
   public async delete(postId: string): Promise<void> {
     await this.postModel.destroy({
-      where: { id: postId },
+      where: {
+        id: postId,
+      },
     });
   }
 
   public async get(postId: string): Promise<Post> {
     const post = await this.postModel.findOne({
       where: { id: postId },
-      include: ["comments"],
+      include: [
+        {
+          model: User,
+          attributes: ["id", "username"],
+        },
+        "comments",
+      ],
+      attributes: {
+        exclude: ["userId"],
+      },
     });
 
     if (!post) throw new NotFoundException("Post not found.");
