@@ -1,4 +1,3 @@
-import { JwtService } from "@nestjs/jwt";
 import * as bcrypt from "bcrypt";
 import { Request } from "express";
 
@@ -14,17 +13,13 @@ export function extractTokenFromHeader(request: Request): string | undefined {
   return type === "Bearer" ? token : undefined;
 }
 
+export function extractCookieToken(request: Request): string | undefined {
+  return request.cookies["auth-cookie"]?.token;
+}
+
 export async function compareHash(
   plain: string,
   hashed: string,
 ): Promise<boolean> {
   return bcrypt.compare(plain, hashed);
-}
-
-export async function verifyToken(jwtService: JwtService, token: string) {
-  const checkToken = await jwtService.verifyAsync(token, {
-    secret: process.env.JWT_SECRET,
-  });
-
-  return checkToken;
 }

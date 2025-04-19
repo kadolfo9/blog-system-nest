@@ -5,13 +5,24 @@ services:
     restart: no
     ports:
       - 5432:5432
-    environment:
-      POSTGRES_USER: blog_system
-      POSTGRES_PASSWORD: blogsystempostgres123
-      POSTGRES_DB: blog_system
+    env_file:
+      - .docker.env
     volumes:
-      - pgdata:/var/lib/postgresql/data
+      - pgdata:/data/postgres
+    command:
+      - "postgres"
+      - "-c"
+      - "shared_preload_libraries=pgcrypto"
     container_name: blog-system_db
+
+  blog-system_dbadmin:
+    image: adminer:latest
+    depends_on:
+      - blog-system_database
+    restart: no
+    ports:
+      - 8080:8080
+    container_name: blog-system_dbadmin
   
   blog-system_app:
     build:

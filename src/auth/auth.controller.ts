@@ -7,11 +7,13 @@ import {
   Inject,
   Post,
   Request,
+  Res,
 } from "@nestjs/common";
-import { AuthService, TokenResponse } from "@/auth/auth.service";
+import { AuthService } from "@/auth/auth.service";
 import { AuthRequestDto } from "@/auth/dto/auth-request.dto";
 import { Public } from "./decorators/public.decorator";
 import { UserSignupDto } from "@/users/models/dto/user-signup.dto";
+import { Response } from "express";
 
 @Controller("auth")
 export class AuthController {
@@ -22,8 +24,9 @@ export class AuthController {
   @HttpCode(HttpStatus.OK)
   public async auth(
     @Body() authParams: AuthRequestDto,
-  ): Promise<TokenResponse> {
-    return this.authService.attemptLogin(authParams);
+    @Res() response: Response,
+  ): Promise<void> {
+    return this.authService.attemptLogin(authParams, response);
   }
 
   @Public()

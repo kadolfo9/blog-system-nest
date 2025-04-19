@@ -11,6 +11,7 @@ import { AuthService } from "@/auth/auth.service";
 import { InjectModel } from "@nestjs/sequelize";
 import { Comment } from "./models/comments.model";
 import { EditCommentDto } from "./models/dto/edit-comment.dto";
+import { User } from "@/users/models/users.model";
 
 @Injectable({ scope: Scope.REQUEST })
 export class CommentsService {
@@ -63,6 +64,13 @@ export class CommentsService {
     return await this.commentModel.findAll({
       where: {
         postId: postId,
+      },
+      include: {
+        model: User,
+        attributes: ["id", "username"],
+      },
+      attributes: {
+        exclude: ["userId"],
       },
     });
   }

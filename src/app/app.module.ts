@@ -1,11 +1,10 @@
+import { ConfigModule } from "@nestjs/config";
+import { SequelizeModule } from "@nestjs/sequelize";
+import { Dialect } from "sequelize";
 import { Module } from "@nestjs/common";
 import { AppService } from "@/app/app.service";
 import { AuthModule } from "@/auth/auth.module";
 import { UsersModule } from "@/users/users.module";
-import { ConfigModule } from "@nestjs/config";
-import { SequelizeModule } from "@nestjs/sequelize";
-import { Dialect } from "sequelize";
-import { JwtModule } from "@nestjs/jwt";
 import { AuthService } from "@/auth/auth.service";
 import { PostsModule } from "@/posts/posts.module";
 
@@ -27,14 +26,6 @@ import { PostsModule } from "@/posts/posts.module";
       synchronize: false,
       logging: false,
       timezone: "-03:00",
-    }),
-
-    JwtModule.register({
-      global: true,
-      secret: process.env.JWT_SECRET,
-      signOptions: {
-        expiresIn: "30d",
-      },
     }),
 
     PostsModule,

@@ -3,6 +3,7 @@ import {
   Inject,
   Injectable,
   Request,
+  Res,
   UnauthorizedException,
 } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
@@ -15,6 +16,7 @@ import {
   generateHash,
 } from "@/global/helpers";
 import { UserSignupDto } from "@/users/models/dto/user-signup.dto";
+import { Response } from "express";
 
 export interface TokenResponse {
   token: string;
@@ -42,13 +44,16 @@ export class AuthService {
     };
   }
 
-  async attemptLogin(authParams: AuthRequestDto): Promise<TokenResponse> {
+  async attemptLogin(
+    authParams: AuthRequestDto,
+    @Res() response: Response,
+  ): Promise<void> {
     const { email, password } = authParams;
 
     const user = await this.userService.findByEmail(email);
 
     if (user) {
-      const compare = await compareHash(password, user?.password);
+      const compare = await compareHash(password, user.password);
 
       if (!compare) {
         throw new UnauthorizedException(
@@ -56,10 +61,10 @@ export class AuthService {
         );
       }
 
-      return this.login(user);
+      response.send(this.login(user));
     }
 
-    throw new UnauthorizedException("Incorrect Email address or password.");
+    throw new UnauthorizedException("User with that email does not exist.");
   }
 
   async signUp(signUpParams: UserSignupDto): Promise<void> {
