@@ -37,11 +37,13 @@ export class PostsController {
   }
 
   @Get()
+  @Public()
   public async getAll(): Promise<PostModel[]> {
     return this.postsService.getAll();
   }
 
   @Get("/:postId")
+  @Public()
   public async get(@Param("postId") postId: string): Promise<PostModel> {
     return this.postsService.get(postId);
   }

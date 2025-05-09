@@ -10,6 +10,7 @@ import {
 import { CreateCommentDto } from "./models/dto/create-comment.dto";
 import { CommentsService } from "./comments.service";
 import { Comment } from "./models/comments.model";
+import { Public } from "@/auth/decorators/public.decorator";
 
 @Controller("posts/comments")
 export class CommentsController {
@@ -26,6 +27,7 @@ export class CommentsController {
   }
 
   @Get("/:postId")
+  @Public()
   public async get(@Param("postId") postId: string): Promise<Comment[]> {
     return this.commentsService.getByPostId(postId);
   }
