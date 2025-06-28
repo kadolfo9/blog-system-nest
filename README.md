@@ -35,6 +35,9 @@ $ npm install
 ## Running the app
 
 ```bash
+# migrating/seeding database
+$ npm run db:reset (or npm run db:migrate)
+
 # development
 $ npm run start
 
