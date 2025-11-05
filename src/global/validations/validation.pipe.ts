@@ -12,13 +12,13 @@ type Metatype = new (...args: any[]) => object;
 @Injectable()
 export class ValidationPipe implements PipeTransform<any> {
   async transform(value: any, { metatype }: ArgumentMetadata) {
-    const m = metatype as Metatype | undefined;
+    const metatypeObject = metatype as Metatype | undefined;
 
-    if (!m || !this.toValidate(m)) {
+    if (!metatypeObject || !this.toValidate(metatypeObject)) {
       return value;
     }
 
-    const object = plainToInstance(m, value);
+    const object = plainToInstance(metatypeObject, value);
     const errors = await validate(object);
 
     if (errors.length > 0) {
