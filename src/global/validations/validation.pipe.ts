@@ -7,22 +7,34 @@ import {
 import { validate } from "class-validator";
 import { plainToInstance } from "class-transformer";
 
+type Metatype = new (...args: any[]) => object;
+
 @Injectable()
 export class ValidationPipe implements PipeTransform<any> {
   async transform(value: any, { metatype }: ArgumentMetadata) {
-    if (!metatype || !this.toValidate(metatype)) {
+    const m = metatype as Metatype | undefined;
+
+    if (!m || !this.toValidate(m)) {
       return value;
     }
-    const object = plainToInstance(metatype, value);
+
+    const object = plainToInstance(m, value);
     const errors = await validate(object);
+
     if (errors.length > 0) {
       throw new BadRequestException("Validation failed");
     }
     return value;
   }
 
-  private toValidate(metatype: Function): boolean {
-    const types: Function[] = [String, Boolean, Number, Array, Object];
-    return !types.includes(metatype);
+  private toValidate(metatype: Metatype): boolean {
+    const builtinConstructors = [
+      String,
+      Boolean,
+      Number,
+      Array,
+      Object,
+    ] as unknown[];
+    return !builtinConstructors.includes(metatype as unknown);
   }
 }
